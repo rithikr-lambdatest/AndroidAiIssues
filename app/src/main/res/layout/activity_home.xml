@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  AndroidAiIssues — single-page AI-rule fixture. Everything is on the HOME page so one
+  scan of the launch screen catches both AI rules:
+
+  1) image-in-text (WCAG 1.4.5): four images whose pixels contain readable text and which
+     match no exception (not logos, icons, charts, or scanned documents). contentDescriptions
+     are set deliberately — a label does NOT satisfy this rule, and having labels keeps the
+     missing-label rules quiet so the scan stays focused on the AI findings.
+
+  2) meaningful-reading-order (WCAG 1.3.2/2.4.3): three numbered steps stacked vertically,
+     with accessibilityTraversal* forcing traversal Step 1 -> Step 3 -> Step 2. A cross-row
+     scramble of explicitly numbered content demonstrably breaks logical flow, and matches
+     none of the engine's intentional cases (not same-row, not a sticky CTA, not a modal,
+     not a card grouping). The engine reports at most one reading-order issue per scan.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AI Issues"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <!-- ============ image-in-text: 2x2 grid of text-bearing images ============ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ai_text_image_1"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/text_image_1"
+            android:contentDescription="Promotional banner one" />
+
+        <ImageView
+            android:id="@+id/ai_text_image_2"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/text_image_2"
+            android:contentDescription="Promotional banner two" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/ai_text_image_3"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/text_image_3"
+            android:contentDescription="Promotional banner three" />
+
+        <ImageView
+            android:id="@+id/ai_text_image_4"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/text_image_4"
+            android:contentDescription="Promotional banner four" />
+    </LinearLayout>
+
+    <!-- ============ meaningful-reading-order: cross-row traversal scramble ============ -->
+    <TextView
+        android:id="@+id/ai_order_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="How to order"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/ai_step1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Step 1: Choose your product"
+        android:padding="10dp"
+        android:background="#EEF3F8"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Visually second, but traversal jumps here LAST (after step 3). -->
+    <TextView
+        android:id="@+id/ai_step2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Step 2: Add to cart"
+        android:padding="10dp"
+        android:background="#EEF3F8"
+        android:accessibilityTraversalAfter="@+id/ai_step3"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Visually third, but traversal visits it straight after step 1. -->
+    <TextView
+        android:id="@+id/ai_step3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Step 3: Checkout"
+        android:padding="10dp"
+        android:background="#EEF3F8"
+        android:accessibilityTraversalAfter="@+id/ai_step1"
+        android:layout_marginBottom="16dp" />
+
+  </LinearLayout>
+</ScrollView>
