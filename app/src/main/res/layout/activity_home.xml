@@ -46,8 +46,8 @@
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/text_image_1"
-            android:contentDescription="Promotional banner one" />
+            android:src="@drawable/hindi_english_text"
+            android:contentDescription="Hindi and English mixed script text" />
 
         <ImageView
             android:id="@+id/ai_text_image_2"
@@ -82,8 +82,8 @@
             android:layout_height="130dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:src="@drawable/text_image_4"
-            android:contentDescription="Promotional banner four" />
+            android:src="@drawable/japanese_text"
+            android:contentDescription="Japanese text" />
     </LinearLayout>
 
     <!-- ============ meaningful-reading-order: visually wrong semantic order ============
