@@ -86,46 +86,153 @@
             android:contentDescription="Promotional banner four" />
     </LinearLayout>
 
-    <!-- ============ meaningful-reading-order: cross-row traversal scramble ============ -->
-    <TextView
-        android:id="@+id/ai_order_heading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="How to order"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+    <!-- ============ meaningful-reading-order: visually wrong semantic order ============
+         Proven-detectable pattern (mirrors QA_Accessibility_App's Meaningful Sequence screen):
+         on Android the accessibility dump follows visual position, so the violation must be a
+         visually wrong top-to-bottom order - price above product name, input above its label,
+         controls above the song they control. No traversal overrides. -->
 
-    <TextView
-        android:id="@+id/ai_step1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Step 1: Choose your product"
-        android:padding="10dp"
-        android:background="#EEF3F8"
-        android:layout_marginBottom="8dp" />
+        android:orientation="vertical"
+        android:background="#EEEEF2"
+        android:padding="14dp"
+        android:layout_marginBottom="12dp">
 
-    <!-- Visually second, but traversal jumps here LAST (after step 3). -->
-    <TextView
-        android:id="@+id/ai_step2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Step 2: Add to cart"
-        android:padding="10dp"
-        android:background="#EEF3F8"
-        android:accessibilityTraversalAfter="@+id/ai_step3"
-        android:layout_marginBottom="8dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="V-01: Price Before Name"
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
-    <!-- Visually third, but traversal visits it straight after step 1. -->
-    <TextView
-        android:id="@+id/ai_step3"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price rendered ABOVE the product name."
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/ai_mro_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$79.99"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ai_mro_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wireless Headphones"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Step 3: Checkout"
-        android:padding="10dp"
-        android:background="#EEF3F8"
-        android:accessibilityTraversalAfter="@+id/ai_step1"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:background="#EEEEF2"
+        android:padding="14dp"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="V-02: Input Before Label"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text field rendered ABOVE its label."
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/ai_mro_email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter here..."
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/ai_mro_email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#EEEEF2"
+        android:padding="14dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="V-03: Controls Before Song"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Playback controls rendered ABOVE the song title/artist."
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ai_mro_prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Prev"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/ai_mro_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Play"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/ai_mro_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Next" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ai_mro_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bohemian Rhapsody"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ai_mro_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Queen"
+            android:textSize="14sp" />
+    </LinearLayout>
 
   </LinearLayout>
 </ScrollView>
